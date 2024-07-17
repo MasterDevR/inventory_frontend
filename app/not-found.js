@@ -15,9 +15,8 @@ const pageNotFound = () => {
           priority
         />
         <div className="ml-4 flex flex-col justify-between gap-y-3">
-          <h1 className="font-bold">Something Went Wrong.</h1>
-          <h2>Please Contact The Admin For Immediate Action.</h2>
-          <span>{`Don't worry everything is under control.`}</span>
+          <h1 className="font-bold">Page Not Found.</h1>
+          <h2>Please Enter A Valid URL.</h2>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import SideBarContainer from "@/components/ui/side-bar/side-bar";
 import HeaderWrapper from "@/components/ui/header/header-wrapper";
 import "@/app/globals.css";
+import "@/build.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

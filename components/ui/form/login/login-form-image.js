@@ -15,7 +15,7 @@ const LoginFormImage = () => {
         style={{ width: "100%", height: "auto" }}
       />
       <h1 className="text-2xl font-black tracking-widest text-green-950">
-        UDM INVENTORY
+        UDM INVENTORY SYSTEM
       </h1>
     </div>
   );
