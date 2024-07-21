@@ -4,8 +4,18 @@ import useStore from "@/components/store/store";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 const HeaderWrapper = () => {
-  const { showSidebar, toggleSidebar } = useStore();
+  const { showSidebar, toggleSidebar, setUserRole, removeLogin } = useStore();
+  const router = useRouter();
+  const logoutHandler = async () => {
+    console.log("first");
+    localStorage.clear();
+    setUserRole(null);
+    removeLogin(false);
+    router.push("/");
+  };
   return (
     <header
       className={`${showSidebar ? "absolute right-0" : "sticky"} top-0 w-full lg:sticky`}
@@ -23,7 +33,7 @@ const HeaderWrapper = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="avatar btn btn-circle btn-ghost"
             >
               <div className="w-10 rounded-full">
                 <Image
@@ -39,7 +49,7 @@ const HeaderWrapper = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
             >
               <li>
                 <a className="justify-between">
@@ -51,7 +61,7 @@ const HeaderWrapper = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <button onClick={logoutHandler}>Logout</button>
               </li>
             </ul>
           </div>
