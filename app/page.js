@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import LoginForm from "@/components/ui/form/login/login-form";
-import useStore from "@/components/store/store";
+import UseStore from "@/components/store/store";
 
 // css
 import classes from "@/public/style/login.module.css";
-const page = () => {
-  const setIsLogin = useStore((state) => state.setIsLogin);
-  const setUserRole = useStore((state) => state.setUserRole);
+const Page = () => {
+  const setIsLogin = UseStore((state) => state.setIsLogin);
+  const setUserRole = UseStore((state) => state.setUserRole);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,4 +33,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

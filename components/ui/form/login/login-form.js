@@ -4,14 +4,14 @@ import { FaRegUserCircle, FaLockOpen, FaLock } from "react-icons/fa";
 import LoginFormImage from "./login-form-image";
 import ToastWrapper from "../../toast/toast-wrapper";
 import axios from "axios";
-import useStore from "@/components/store/store";
+import UseStore from "@/components/store/store";
 import { useRouter } from "next/navigation";
 const LoginForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isError, setError] = useState({ status: undefined, message: "" });
-  const setIsLogin = useStore((state) => state.setIsLogin);
-  const setUserRole = useStore((state) => state.setUserRole);
+  const setIsLogin = UseStore((state) => state.setIsLogin);
+  const setUserRole = UseStore((state) => state.setUserRole);
   const url = process.env.NEXT_PUBLIC_URL;
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
