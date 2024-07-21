@@ -4,9 +4,14 @@ import { FaRegUserCircle, FaLockOpen, FaLock } from "react-icons/fa";
 import LoginFormImage from "./login-form-image";
 import ToastWrapper from "../../toast/toast-wrapper";
 import axios from "axios";
+import useStore from "@/components/store/store";
+import { useRouter } from "next/navigation";
 const LoginForm = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isError, setError] = useState({ status: undefined, message: "" });
+  const setIsLogin = useStore((state) => state.setIsLogin);
+  const setUserRole = useStore((state) => state.setUserRole);
   const url = process.env.NEXT_PUBLIC_URL;
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -24,8 +29,18 @@ const LoginForm = () => {
         password,
       });
       if (response.data.status === 200) {
-        console.log(response.data.status);
+        console.log(response.data);
+
+        let role = response.data.data.response.userData.role;
+        let token = response.data.data.Token;
+        localStorage.setItem("key1", token);
+        localStorage.setItem("key2", role);
+        localStorage.setItem("key3", true);
+        setIsLogin(true);
+        setUserRole(role);
+        router.push("/dashboard");
       } else {
+        console.log(response.data);
         setError({
           status: response.data.status,
           message: response.data.message,
@@ -89,7 +104,7 @@ const LoginForm = () => {
           </button>
         </form>
       </div>
-      {isError.status !== undefined && <ToastWrapper isError={isError} />}
+      {/* {isError.status !== undefined && <ToastWrapper isError={isError} />} */}
     </div>
   );
 };

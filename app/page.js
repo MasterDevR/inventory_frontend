@@ -1,8 +1,33 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import LoginForm from "@/components/ui/form/login/login-form";
+import useStore from "@/components/store/store";
+
+// css
+import classes from "@/public/style/login.module.css";
 const page = () => {
+  const setIsLogin = useStore((state) => state.setIsLogin);
+  const setUserRole = useStore((state) => state.setUserRole);
+  const router = useRouter();
+
+  useEffect(() => {
+    try {
+      const userRole = localStorage.getItem("key2");
+      const isLogin = localStorage.getItem("key3");
+
+      if (userRole && isLogin) {
+        setIsLogin(true);
+        setUserRole(userRole);
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      console.log("Caught Error : ", err);
+    }
+  }, []);
   return (
-    <div className="bg-blue-300">
+    <div className={`${classes.bg_color}`}>
       <LoginForm />
     </div>
   );

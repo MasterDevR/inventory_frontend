@@ -1,3 +1,6 @@
-.inputStyle{
-   border: black 1px solid;
+.inputStyle {
+  border: black 1px solid;
+}
+.bg_color {
+  background-color: red;
 }
