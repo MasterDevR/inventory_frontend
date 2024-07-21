@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
 import LoginForm from "@/components/ui/form/login/login-form";
 import UseStore from "@/components/store/store";
 
 // css
-import classes from "@/public/style/login.module.css";
 const Page = () => {
   const setIsLogin = UseStore((state) => state.setIsLogin);
   const setUserRole = UseStore((state) => state.setUserRole);
@@ -27,7 +25,7 @@ const Page = () => {
     }
   }, []);
   return (
-    <div className={`${classes.bg_color}`}>
+    <div>
       <LoginForm />
     </div>
   );

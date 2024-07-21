@@ -3,7 +3,8 @@ import SideBarContainer from "@/components/ui/side-bar/side-bar";
 import HeaderWrapper from "@/components/ui/header/header-wrapper";
 import "@/app/globals.css";
 import "@/build.css";
-const inter = Inter({ subsets: ["latin"] });
+
+import Wrapper from "@/components/ui/active-user-wrapper/wrapper";
 
 export const metadata = {
   title: " UDM INVENTORY",
@@ -12,7 +13,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <div>
+    <Wrapper>
       <div className="flex flex-row items-start bg-blue-300">
         <>
           <SideBarContainer />
@@ -24,6 +25,6 @@ export default function RootLayout({ children }) {
           <main className="h-[100dvh]">{children}</main>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
