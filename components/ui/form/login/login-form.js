@@ -12,6 +12,8 @@ const LoginForm = () => {
   const [isError, setError] = useState({ status: undefined, message: "" });
   const setIsLogin = UseStore((state) => state.setIsLogin);
   const setUserRole = UseStore((state) => state.setUserRole);
+  const [isLoading, setIsLoading] = useState(false);
+
   const url = process.env.NEXT_PUBLIC_URL;
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -20,6 +22,7 @@ const LoginForm = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const formData = new FormData(e.target);
       const username = formData.get("username");
       const password = formData.get("password");
@@ -29,8 +32,6 @@ const LoginForm = () => {
         password,
       });
       if (response.data.status === 200) {
-        console.log(response.data);
-
         let role = response.data.data.response.userData.role;
         let token = response.data.data.Token;
         localStorage.setItem("key1", token);
@@ -51,6 +52,8 @@ const LoginForm = () => {
         status: 500,
         message: err.message,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -98,13 +101,14 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="rounded-md border-2 border-gray-300 p-2 font-bold tracking-widest text-gray-400 hover:border-green-950 hover:bg-green-950 hover:text-white"
+            disabled={isLoading}
+            className="cursor-pointer rounded-md border-2 bg-blue-700 p-2 font-bold tracking-widest text-white hover:bg-blue-500"
           >
-            LOGIN
+            {isLoading ? "Loading..." : "LOGIN"}
           </button>
         </form>
       </div>
-      {/* {isError.status !== undefined && <ToastWrapper isError={isError} />} */}
+      {isError.status !== undefined && <ToastWrapper isError={isError} />}
     </div>
   );
 };

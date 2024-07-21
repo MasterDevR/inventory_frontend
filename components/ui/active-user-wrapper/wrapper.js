@@ -2,24 +2,38 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "../loader/Loader";
+import axios from "axios";
 
 const Wrapper = ({ children }) => {
+  const url = process.env.NEXT_PUBLIC_URL;
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    console.log("adfasdfas");
-    try {
-      const userRole = localStorage.getItem("key2");
-      const isLogin = localStorage.getItem("key3");
-      if (!userRole && !isLogin) {
+    const checkUser = async () => {
+      try {
+        const token = localStorage.getItem("key1");
+        const response = await axios.post(`${url}/verify-token`, { token });
+        if (response.data.status === 400 || response.data.status === 401) {
+          localStorage.clear();
+          router.push("/");
+          return;
+        }
+        setIsLoading(false);
+      } catch (err) {
+        localStorage.clear();
         router.push("/");
       }
-      setIsLoading(false);
-    } catch (err) {
-      console.log("Caught Error : ", err);
-    }
+    };
+    checkUser();
   }, []);
-  return <div>{!isLoading ? children : <Loader />}</div>;
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  return <div>{children}</div>;
 };
 
 export default Wrapper;

@@ -5,28 +5,49 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
+import axios from "axios";
 const HeaderWrapper = () => {
+  const url = process.env.NEXT_PUBLIC_URL;
+
   const { showSidebar, toggleSidebar, setUserRole, removeLogin } = useStore();
   const router = useRouter();
   const logoutHandler = async () => {
-    console.log("first");
-    localStorage.clear();
-    setUserRole(null);
-    removeLogin(false);
-    router.push("/");
+    const token = localStorage.getItem("key1");
+    try {
+      // console.log(token);
+      // // const response = await axios
+      // //   .post(`${url}/logout`, token)
+      // //   .then((res) => {
+      // //     return res.data;
+      // //   })
+      // //   .catch((err) => {
+      // //     return err;
+      // //   });
+      console.log("first");
+      localStorage.clear();
+      setUserRole(null);
+      removeLogin(false);
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <header
       className={`${showSidebar ? "absolute right-0" : "sticky"} top-0 w-full lg:sticky`}
     >
       <div className="navbar bg-base-100">
-        <div className="flex-1" onClick={toggleSidebar}>
-          {showSidebar ? (
-            <RxCross2 size={"1.5rem"} />
-          ) : (
-            <GiHamburgerMenu size={"1.5rem"} />
-          )}
+        <div className="flex-1">
+          <div
+            className="cursor-pointer rounded-sm p-3 hover:bg-slate-200"
+            onClick={toggleSidebar}
+          >
+            {showSidebar ? (
+              <RxCross2 size={"1.5rem"} />
+            ) : (
+              <GiHamburgerMenu size={"1.5rem"} />
+            )}
+          </div>
         </div>
         <div className="flex-none gap-2">
           <div className="dropdown dropdown-end">
