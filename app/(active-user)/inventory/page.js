@@ -1,5 +1,13 @@
+"use client";
+
+import AddProduct from "@/components/ui/form/stock/add-product";
+
 const page = () => {
-  return <div className="h-screen w-full">page</div>;
+  return (
+    <div>
+      <AddProduct />
+    </div>
+  );
 };
 
 export default page;

@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <Wrapper>
-      <div className="flex flex-row items-start bg-blue-300">
+      <div className="flex flex-row items-start">
         <>
           <SideBarContainer />
         </>

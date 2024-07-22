@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Wrapper from "./wrapper";
 import { BsBoxFill } from "react-icons/bs";
 import { LuBoxes } from "react-icons/lu";
-import { MdDashboard } from "react-icons/md";
+import { BiSolidDashboard } from "react-icons/bi";
 import { FaMessage } from "react-icons/fa6";
 import { FaChartBar } from "react-icons/fa";
 import { HiDocumentReport } from "react-icons/hi";
@@ -20,7 +20,7 @@ const SideBarContainer = () => {
     {
       path: "/dashboard",
       name: "Dashboard",
-      icon: <MdDashboard size={"1.5rem"} />,
+      icon: <BiSolidDashboard size={"1.5rem"} />,
     },
     {
       path: "/inventory",
@@ -52,8 +52,8 @@ const SideBarContainer = () => {
 
   return (
     <Wrapper showSidebar={showSidebar}>
-      <div className="flex items-center gap-x-2 pb-3 pt-3">
-        <LuBoxes size={"1.5rem"} className="text-white" />
+      <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-4 pb-3 pt-3">
+        <LuBoxes size={"1.5rem"} className="flex-1 text-white" />
 
         {showSidebar && (
           <>
