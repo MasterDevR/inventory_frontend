@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
+  isDisplaySupplyModal: false,
   showSidebar: true,
   userData: [],
   addSupplyData: [],
@@ -13,6 +14,9 @@ const useStore = create((set) => ({
   setUserRole: (userRole) => set(() => ({ role: userRole })),
   setsAddSupplyData: (data) =>
     set((state) => ({ addSupplyData: [...state.addSupplyData, data] })),
+  overrideSupplyData: (data) => set(() => ({ addSupplyData: data })),
+  clearAddSupplyData: () => set(() => ({ addSupplyData: [] })),
+  toggleSupplyModal: (bool) => set(() => ({ isDisplaySupplyModal: bool })),
 }));
 
 export default useStore;

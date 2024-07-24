@@ -1,11 +1,15 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HideModal from "./hide-modal";
 import useStore from "@/components/store/store";
+import OpenItemListBtn from "./open-item-list-btn";
+import styles from "@/public/style/modal-form.module.css";
+import axios from "axios";
+import SuccessToast from "../../toast/success";
 const Modal = () => {
   const { addSupplyData, setsAddSupplyData } = useStore();
-  const submitHandler = (e) => {
-    console.log("im in");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData(e.target);
@@ -13,134 +17,162 @@ const Modal = () => {
       formData.forEach((value, key) => {
         newSupplyData[key] = value;
       });
+
       const itemName = newSupplyData.item;
       const exists = addSupplyData.some((obj) => obj.item === itemName);
-      console.log(exists);
       if (exists) {
-        return; // Item already exists, exit the handler
+        return;
       }
+      await axios.post(
+        "/api/upload",
+        {
+          image: newSupplyData.image,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
 
-      console.log(exists);
-      console.log(newSupplyData);
+      setIsSuccess(true);
       setsAddSupplyData(newSupplyData);
-    } catch (err) {}
+    } catch (err) {
+      console.log("Cauth ERROR ", err);
+    } finally {
+      setIsSuccess(false);
+    }
   };
 
-  useEffect(() => {
-    console.log(addSupplyData);
-  }, [addSupplyData]);
   return (
     <dialog id="add-stock" className="modal">
-      <div className="modal-box w-full">
-        <HideModal id="add-stock" />
-        <button
-          className="relative w-2/6 rounded-lg border-2 border-green-500 p-2 text-green-500 transition-all delay-75 ease-in-out hover:bg-green-500 hover:text-white lg:w-1/6"
-          onClick={() => document.getElementById("my_modal_4").showModal()}
-        >
-          open modal
-        </button>
+      {isSuccess && <SuccessToast message="Adding Success." />}
+      <div className="modal-box max-w-5xl">
+        <div className="flex items-center justify-between">
+          <OpenItemListBtn />
+          <HideModal id="add-stock" />
+        </div>
         <h3 className="pt-2 text-center text-lg font-bold tracking-widest text-black">
           ADD ITEM
         </h3>
         <div className="divider"></div>
         <div className="modal-action flex flex-col">
-          <form method="dialog" className="w-full" onSubmit={submitHandler}>
-            <label className="input input-bordered flex items-center gap-2">
-              Item |
+          <form
+            method="dialog"
+            className="flex w-full flex-wrap justify-between gap-5"
+            onSubmit={submitHandler}
+          >
+            <div className={`${styles.inputGroup} `}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Item"
+                id="userInput"
+                className={styles.input}
                 name="item"
                 required
               />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-              Description |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Item
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Description"
+                id="userInput"
+                className={styles.input}
                 name="description"
                 required
               />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-              Measurement |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Description
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Measurement"
+                id="userInput"
+                className={styles.input}
                 name="measurement"
                 required
               />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-              Stock No. |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Measurement
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Stock No."
+                id="userInput"
+                className={styles.input}
                 name="stock"
                 required
               />
-            </label>{" "}
-            <label className="input input-bordered flex items-center gap-2">
-              Re-order Point |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Stock No.
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Re-order Point"
+                id="userInput"
+                className={styles.input}
                 name="order"
                 required
               />
-            </label>{" "}
-            <label className="input input-bordered flex items-center gap-2">
-              Quantity |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Re-Order Point
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Quantity"
+                id="userInput"
+                className={styles.input}
                 name="quantity"
                 required
               />
-            </label>{" "}
-            <label className="input input-bordered flex items-center gap-2">
-              Reference |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Quantity
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="Reference"
+                id="userInput"
+                className={styles.input}
                 name="reference"
                 required
               />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-              No. Date to Consume |
+              <label className={styles.userLabel} htmlFor="userInput">
+                Reference
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="text"
-                className="grow"
-                placeholder="No. Date to Consume"
-                name="Consume"
+                id="userInput"
+                className={styles.input}
+                name="consume"
                 required
               />
-            </label>
-            <label className="input input-bordered flex items-center gap-2">
-              Image |
+              <label className={styles.userLabel} htmlFor="userInput">
+                No. Of Date To Consume
+              </label>
+            </div>
+            <div className={styles.inputGroup}>
               <input
                 type="file"
-                className="grow"
-                placeholder="Select Image"
+                id="userInput"
+                className={styles.input}
                 name="image"
-                id="image"
                 required
+                accept="image/jpeg, image/png"
               />
-            </label>
+            </div>
             <button
               className="btn btn-success mt-5 w-full font-bold text-white"
               type="submit"
             >
-              Finish
+              Add to list
             </button>
           </form>
         </div>
