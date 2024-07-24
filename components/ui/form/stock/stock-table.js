@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStore from "@/components/store/store";
 import DeleteBtn from "./delete-item";
 import Image from "next/image";

@@ -23,7 +23,7 @@ const Modal = () => {
       if (exists) {
         return;
       }
-      await axios.post(
+      const response = await axios.post(
         "/api/upload",
         {
           image: newSupplyData.image,
@@ -34,9 +34,10 @@ const Modal = () => {
           },
         },
       );
-
+      console.log(response.data);
       setIsSuccess(true);
       setsAddSupplyData(newSupplyData);
+      console.log(addSupplyData);
     } catch (err) {
       console.log("Cauth ERROR ", err);
     } finally {
